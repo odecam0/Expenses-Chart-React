@@ -12,9 +12,10 @@
 /*     monospace; */
 /* } */
 
-#main-div {
-    margin: auto;
-    width:  50%;
-    height: 50%;
-    text-align: center;
+body {
+    background-color: hsl(27, 66%, 92%);
+}
+
+p {
+    font-family: 'DM Sans';
 }
