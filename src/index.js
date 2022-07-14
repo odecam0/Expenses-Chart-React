@@ -70,6 +70,57 @@ class Balance extends React.Component {
     } 
 };
 
+class Bar extends React.Component {
+    constructor(props) {
+	super(props);
+	this.state = {
+	    renderInfo: false
+	};
+
+	this.showInfo = this.showInfo.bind(this);
+	this.hideInfo = this.hideInfo.bind(this);
+    }
+
+    showInfo() {
+	this.setState({renderInfo: true});
+    }
+
+    hideInfo() {
+	this.setState({renderInfo: false});
+    }
+
+    render() {
+	let height = this.props.amount / this.props.max_amount * this.props.max_height;
+
+	let bar_style = {
+	    height: Math.floor(height) + 'px',
+	    width: '40px',
+	    backgroundColor: 'black',
+	    marginLeft:'auto',
+	    marginRight:'auto',
+	    borderRadius: '10px' // 
+	};
+
+	let day_style = {
+	    textAlign:'center',
+	    fontWeight:'100'
+	};
+
+	return (
+	    <div style={{display:'block'}}>
+		{this.state.renderInfo &&
+		 <div style={{borderRadius: '10px'}}>
+		     <p>{'$' + this.props.amount}</p>
+		 </div>}
+		<div style        = {bar_style}
+		     onMouseEnter = {this.showInfo}
+		     onMouseLeave = {this.hideInfo}/>
+		<p style={day_style}>{this.props.day}</p>
+	    </div>
+	);
+    }
+}
+
 
 class Chart extends React.Component {
     constructor (props) {
@@ -89,46 +140,24 @@ class Chart extends React.Component {
 	    length: length,
 	    max_height: props.height || 100
 	};
-
-	this.getBar.bind(this);
-    }
-
-    getBar(day, amount) {
-	let height = amount / this.state.max_amount * this.state.max_height;
-
-	let bar_style = {
-	    height: Math.floor(height) + 'px',
-	    width: '40px',
-	    backgroundColor: 'black',
-	    marginLeft:'auto',
-	    marginRight:'auto',
-	    borderRadius: '10px' // 
-	};
-
-	let day_style = {
-	    textAlign:'center'
-	};
-
-	return (
-	    <div style={{display:'block'}}>
-     		<div style={bar_style}/>
-     		<p style={day_style}>{day}</p>
-     	    </div>
-	);
     }
 
     render() {
-	let bars = [];
+	let data   = this.state.data;
+	let params = Object.keys(this.state.data).map((key) => [data[key].day, data[key].amount]);
 
-	for (const i in this.state.data){
-	    bars.push(this.getBar(...Object.values(this.state.data[i])));
-	}
-
+	// TODO: Make prettier
 	return (
-	    <div style={{display:'flex', justifyContent:'space-between', alignItems:'flex-end'}}>{bars}</div>
+	    <div style={{display:'flex', justifyContent:'space-between', alignItems:'flex-end'}}>
+		{params.map(([day, amount])=>
+		    <Bar day={day} amount={amount}
+			 key={day} max_amount={this.state.max_amount}
+			 max_height={this.state.max_height}/>)}
+	    </div>
 	);
     }
 };
+
 
 class MonthTotal extends React.Component {
     render() {
@@ -138,6 +167,7 @@ class MonthTotal extends React.Component {
     }
 };
 
+
 let main_div_style = {
     position: 'absolute',
     top:      '50%',
@@ -145,11 +175,13 @@ let main_div_style = {
     transform: 'translate(-50%, -50%)',
 };
 
+
 let bot_div_style = {
     backgroundColor: 'white',
     padding: '5%',
     borderRadius: '15px'
 };
+
 
 var mock_data = require('./data.json')
 
@@ -167,7 +199,11 @@ function App(props) {
 };
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App style={{backgroundColor: 'hsl(27, 66%, 92%)'}}/>)
+root.render(
+    <React.StrictMode>
+	<App style={{backgroundColor: 'hsl(27, 66%, 92%)'}}/>
+    </React.StrictMode>
+)
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
