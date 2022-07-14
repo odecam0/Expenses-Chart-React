@@ -23,52 +23,54 @@ class Balance extends React.Component {
 	}
     }
     
-    // TODO : Check if style as a public class atribute is a problem
-    outerdiv_style = {
-	backgroundColor: 'hsl(10, 79%, 65%)',
-	padding: '5px',
-	borderRadius: '15px',
-	marginBottom: '10px',
-	display: 'flex',
-	justifyContent: 'space-between',
-	width: '400px'
-    };
+    styles = {
+	outerdiv : {
+	    backgroundColor: 'hsl(10, 79%, 65%)',
+	    padding: '5px',
+	    borderRadius: '15px',
+	    marginBottom: '10px',
+	    display: 'flex',
+	    justifyContent: 'space-between',
+	    width: '400px'
+	},
 
-    uppertext_style = {
-	color:'white',
-	fontSize:'12px',
-	weight:'400',
-	position:'relative',
-	top:'10px'
-    }
+	uppertext : {
+	    color:'white',
+	    fontSize:'12px',
+	    weight:'400',
+	    position:'relative',
+	    top:'10px'
+	},
 
-    lowertext_style = {
-	color:'white',
-	fontSize:'22px',
-	fontWeight:'700'
-    }
+	lowertext : {
+	    color:'white',
+	    fontSize:'22px',
+	    fontWeight:'700'
+	},
 
-    logo_style = {
-	marginTop: 'auto',
-	marginBottom: 'auto',
-	position:'relative',
-	right:'10px'
+	logo : {
+	    marginTop: 'auto',
+	    marginBottom: 'auto',
+	    position:'relative',
+	    right:'10px'
+	}
     }
 
     render() {
 	return (
-	    <div style={this.outerdiv_style}>
+	    <div style={this.styles.outerdiv}>
 		<div style={{position:'relative', left:'10px'}}>
-		    <p style={this.uppertext_style}>My balance</p>
-		    <p style={this.lowertext_style}>{'$' + this.state.balance}</p>
+		    <p style={this.styles.uppertext}>My balance</p>
+		    <p style={this.styles.lowertext}>{'$' + this.state.balance}</p>
 		</div>
-		<div style={this.logo_style}>
+		<div style={this.styles.logo}>
 		    <Logo/>
 		</div>
 	    </div>
 	);
     } 
 };
+
 
 class Bar extends React.Component {
     constructor(props) {
@@ -89,6 +91,30 @@ class Bar extends React.Component {
 	this.setState({renderInfo: false});
     }
 
+    styles = {
+	day : {
+	    textAlign:'center',
+	    fontWeight:'100',
+	    color:'grey'
+	},
+
+	barinfo_div : {
+	    borderRadius: '5px',
+	    position: 'absolute',
+	    backgroundColor: 'black',
+	    width: '60px',
+	    height: '30px',
+	    transform: 'translate(-7px, 0)',
+	},
+
+	barinfo_text : {
+	    color:'white',
+	    textAlign: 'center',
+	    top: '50%',
+	    transform: 'translateY(-50%)'
+	}
+    }
+
     render() {
 	let height = this.props.amount / this.props.max_amount * this.props.max_height;
 
@@ -103,34 +129,18 @@ class Bar extends React.Component {
 	    
 	};
 
-	let day_style = {
-	    textAlign:'center',
-	    fontWeight:'100',
-	    color:'grey'
-	};
-
 	return (
 	    <div style={{display:'block'}}>
 		{this.state.renderInfo &&
-		 <div style={{borderRadius: '5px',
-			      position: 'absolute',
-			      backgroundColor: 'black',
-			      width: '60px',
-			      height: '30px',
-			      transform: 'translate(-7px, 0)',
-			     }}>
-		     <p style={{color:'white',
-				textAlign: 'center',
-				top: '50%',
-				transform: 'translateY(-50%)'
-			       }}>
+		 <div style={this.styles.barinfo_div}>
+		     <p style={this.styles.barinfo_text}>
 			 {'$' + this.props.amount}
 		     </p>
 		 </div>}
 		<div style        = {bar_style}
 		     onMouseEnter = {this.showInfo}
 		     onMouseLeave = {this.hideInfo}/>
-		<p style={day_style}>{this.props.day}</p>
+		<p style={this.styles.day}>{this.props.day}</p>
 	    </div>
 	);
     }
@@ -162,7 +172,6 @@ class Chart extends React.Component {
 	let params = Object.keys(this.state.data).map((key) => [data[key].day, data[key].amount]);
 
 
-	// TODO: Make prettier
 	return (
 	    <div style={{display:'flex', justifyContent:'space-between', alignItems:'flex-end'}}>
 		{
@@ -191,26 +200,35 @@ class MonthTotal extends React.Component {
 	};
     }
 
-    total_style = {
-	fontSize: '35px',
-	fontWeight: '1800',
-	marginTop:'0',
-	marginBottom:'0',
-	verticalAlign:'bottom'
+    styles = {
+	total : {
+	    fontSize: '35px',
+	    fontWeight: '1800',
+	    marginTop:'0',
+	    marginBottom:'0',
+	    verticalAlign:'bottom'
+	},
+
+	annotation : {
+	    fontSize: '12px',
+	    color: 'grey',
+	    marginTop: '0',
+	    marginBottom: '5px'
+	},
+
+	difference : {
+	    marginTop: '0',
+	    marginBottom: '0',
+	},
+
+	outerdiv : {
+	    display:'flex',
+	    justifyContent:'space-between',
+	    alignItems:'flex-end',
+	    marginTop:'20px'
+	}
     }
 
-    annotation_style = {
-	fontSize: '12px',
-	color: 'grey',
-	marginTop: '0',
-	marginBottom: '5px'
-    }
-
-    difference_style = {
-	marginTop: '0',
-	marginBottom: '0',
-    }
-    
     render() {
 	let difference;
 
@@ -221,15 +239,14 @@ class MonthTotal extends React.Component {
 	}
 
 	return (
-	    // <p>The month total will be here</p>
-	    <div style={{display:'flex', justifyContent:'space-between', alignItems:'flex-end', marginTop:'20px'}}>
+	    <div style={this.styles.outerdiv}>
 		<div>
-		    <p style={this.annotation_style}>Total this month</p>
-		    <p style={this.total_style}>{"$" + this.state.month_total}</p>
+		    <p style={this.styles.annotation}>Total this month</p>
+		    <p style={this.styles.total}>{"$" + this.state.month_total}</p>
 		</div>
 		<div>
-		    <p style={this.difference_style}>{difference}</p>
-		    <p style={this.annotation_style}>from last month</p>
+		    <p style={this.styles.difference}>{difference}</p>
+		    <p style={this.styles.annotation}>from last month</p>
 		</div>
 	    </div>
 	);
@@ -280,8 +297,3 @@ root.render(
 	<App style={{backgroundColor: 'hsl(27, 66%, 92%)'}}/>
     </React.StrictMode>
 )
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-// reportWebVitals();
