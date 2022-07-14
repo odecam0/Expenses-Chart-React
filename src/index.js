@@ -26,7 +26,7 @@ class Balance extends React.Component {
     // TODO : Check if style as a public class atribute is a problem
     outerdiv_style = {
 	backgroundColor: 'hsl(10, 79%, 65%)',
-	padding: '10px',
+	padding: '5px',
 	borderRadius: '15px',
 	marginBottom: '10px',
 	display: 'flex',
