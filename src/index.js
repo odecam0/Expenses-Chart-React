@@ -190,6 +190,26 @@ class MonthTotal extends React.Component {
 	    difference: props.difference
 	};
     }
+
+    total_style = {
+	fontSize: '35px',
+	fontWeight: '1800',
+	marginTop:'0',
+	marginBottom:'0',
+	verticalAlign:'bottom'
+    }
+
+    annotation_style = {
+	fontSize: '12px',
+	color: 'grey',
+	marginTop: '0',
+	marginBottom: '5px'
+    }
+
+    difference_style = {
+	marginTop: '0',
+	marginBottom: '0',
+    }
     
     render() {
 	let difference;
@@ -202,14 +222,14 @@ class MonthTotal extends React.Component {
 
 	return (
 	    // <p>The month total will be here</p>
-	    <div style={{display:'flex', justifyContent:'space-between'}}>
-		<div style={{display:'block'}}>
-		    <p>Total this month</p>
-		    <p>{"$" + this.state.month_total}</p>
+	    <div style={{display:'flex', justifyContent:'space-between', alignItems:'flex-end', marginTop:'20px'}}>
+		<div>
+		    <p style={this.annotation_style}>Total this month</p>
+		    <p style={this.total_style}>{"$" + this.state.month_total}</p>
 		</div>
-		<div style={{display:'block'}}>
-		    <p>{difference}</p>
-		    <p>from last month</p>
+		<div>
+		    <p style={this.difference_style}>{difference}</p>
+		    <p style={this.annotation_style}>from last month</p>
 		</div>
 	    </div>
 	);
