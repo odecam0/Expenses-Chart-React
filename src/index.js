@@ -94,23 +94,38 @@ class Bar extends React.Component {
 
 	let bar_style = {
 	    height: Math.floor(height) + 'px',
-	    width: '40px',
-	    backgroundColor: 'black',
+	    width: '45px',
+	    backgroundColor: this.props.color,
 	    marginLeft:'auto',
 	    marginRight:'auto',
-	    borderRadius: '10px' // 
+	    borderRadius: '5px',
+	    marginTop: '40px'
+	    
 	};
 
 	let day_style = {
 	    textAlign:'center',
-	    fontWeight:'100'
+	    fontWeight:'100',
+	    color:'grey'
 	};
 
 	return (
 	    <div style={{display:'block'}}>
 		{this.state.renderInfo &&
-		 <div style={{borderRadius: '10px'}}>
-		     <p>{'$' + this.props.amount}</p>
+		 <div style={{borderRadius: '5px',
+			      position: 'absolute',
+			      backgroundColor: 'black',
+			      width: '60px',
+			      height: '30px',
+			      transform: 'translate(-7px, 0)',
+			     }}>
+		     <p style={{color:'white',
+				textAlign: 'center',
+				top: '50%',
+				transform: 'translateY(-50%)'
+			       }}>
+			 {'$' + this.props.amount}
+		     </p>
 		 </div>}
 		<div style        = {bar_style}
 		     onMouseEnter = {this.showInfo}
@@ -146,13 +161,21 @@ class Chart extends React.Component {
 	let data   = this.state.data;
 	let params = Object.keys(this.state.data).map((key) => [data[key].day, data[key].amount]);
 
+
 	// TODO: Make prettier
 	return (
 	    <div style={{display:'flex', justifyContent:'space-between', alignItems:'flex-end'}}>
-		{params.map(([day, amount])=>
-		    <Bar day={day} amount={amount}
-			 key={day} max_amount={this.state.max_amount}
-			 max_height={this.state.max_height}/>)}
+		{
+		    params.map(([day, amount])=>{
+			let color = 'hsl(10, 79%, 65%)';
+			if (amount === this.state.max_amount) {
+			    color = 'hsl(186, 34%, 60%)';
+			};
+			return (<Bar day={day} amount={amount}
+				     key={day} max_amount={this.state.max_amount}
+				     max_height={this.state.max_height}
+				     color={color}/>);
+		    })}
 	    </div>
 	);
     }
@@ -190,8 +213,9 @@ function App(props) {
 	<div style={main_div_style}>
 	    <Balance balance={1000}/>
 	    <div style={bot_div_style}>
-		<p>Spending - Last 7 days</p>
+		<p style={{fontSize:'22px', fontWeight:'700'}}>Spending - Last 7 days</p>
 		<Chart data={mock_data}/>
+		<div style={{height: '1px', backgroundColor:'hsl(27, 66%, 92%)'}}></div>
 		<MonthTotal/>
 	    </div>
 	</div>
