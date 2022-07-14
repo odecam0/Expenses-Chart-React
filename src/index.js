@@ -183,9 +183,35 @@ class Chart extends React.Component {
 
 
 class MonthTotal extends React.Component {
+    constructor(props) {
+	super(props);
+	this.state = {
+	    month_total: props.month_total,
+	    difference: props.difference
+	};
+    }
+    
     render() {
+	let difference;
+
+	if (this.state.difference > 0) {
+	    difference = '+' + this.state.difference + '%';
+	} else {
+	    difference = this.state.difference + '%';
+	}
+
 	return (
-	    <p>The month total will be here</p>
+	    // <p>The month total will be here</p>
+	    <div style={{display:'flex', justifyContent:'space-between'}}>
+		<div style={{display:'block'}}>
+		    <p>Total this month</p>
+		    <p>{"$" + this.state.month_total}</p>
+		</div>
+		<div style={{display:'block'}}>
+		    <p>{difference}</p>
+		    <p>from last month</p>
+		</div>
+	    </div>
 	);
     }
 };
@@ -209,14 +235,20 @@ let bot_div_style = {
 var mock_data = require('./data.json')
 
 function App(props) {
+
+    let month_total = Object.keys(mock_data).map(key => mock_data[key].amount);
+    month_total     = month_total.reduce((a, b)=>a+b, 0);
+
+    let difference = -2.4;
+
     return (
 	<div style={main_div_style}>
 	    <Balance balance={1000}/>
 	    <div style={bot_div_style}>
 		<p style={{fontSize:'22px', fontWeight:'700'}}>Spending - Last 7 days</p>
 		<Chart data={mock_data}/>
-		<div style={{height: '1px', backgroundColor:'hsl(27, 66%, 92%)'}}></div>
-		<MonthTotal/>
+		<div style={{height:'2px', backgroundColor:'hsl(27, 66%, 92%)'}}></div>
+		<MonthTotal month_total={month_total} difference={difference}/>
 	    </div>
 	</div>
     );
