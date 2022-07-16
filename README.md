@@ -14,7 +14,7 @@ This is a solution to the [Expenses chart component challenge on Frontend Mentor
 ## Links
 
 - Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: https://odecam0.github.io/Expenses-Chart-Example-React/
+- Live Site URL: https://odecam0.github.io/Expenses-Chart-React/
 
 ## Built with
 
