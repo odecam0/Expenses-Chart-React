@@ -217,6 +217,8 @@ class MonthTotal extends React.Component {
 	},
 
 	difference : {
+	    textAlign: 'right',
+	    fontWeight: 'bold',
 	    marginTop: '0',
 	    marginBottom: '0',
 	},
