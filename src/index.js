@@ -281,8 +281,8 @@ function App(props) {
     let difference = -2.4;
 
     return (
-	<main role='main'>
-	    <div style={main_div_style}>
+	<main>
+	    <div style={main_div_style} role='main'>
 		<Balance balance={1000}/>
 		<div style={bot_div_style}>
 		    <h1 style={{fontSize:'22px', fontWeight:'700'}}>Spending - Last 7 days</h1>
