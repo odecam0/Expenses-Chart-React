@@ -281,15 +281,17 @@ function App(props) {
     let difference = -2.4;
 
     return (
-	<div style={main_div_style}>
-	    <Balance balance={1000}/>
-	    <div style={bot_div_style}>
-		<p style={{fontSize:'22px', fontWeight:'700'}}>Spending - Last 7 days</p>
-		<Chart data={mock_data}/>
-		<div style={{height:'2px', backgroundColor:'hsl(27, 66%, 92%)'}}></div>
-		<MonthTotal month_total={month_total} difference={difference}/>
+	<main role='main'>
+	    <div style={main_div_style}>
+		<Balance balance={1000}/>
+		<div style={bot_div_style}>
+		    <h1 style={{fontSize:'22px', fontWeight:'700'}}>Spending - Last 7 days</h1>
+		    <Chart data={mock_data}/>
+		    <div style={{height:'2px', backgroundColor:'hsl(27, 66%, 92%)'}}></div>
+		    <MonthTotal month_total={month_total} difference={difference}/>
+		</div>
 	    </div>
-	</div>
+	</main>
     );
 };
 

@@ -16,6 +16,6 @@ body {
     background-color: hsl(27, 66%, 92%);
 }
 
-p {
+p, h1 {
     font-family: 'DM Sans';
 }
